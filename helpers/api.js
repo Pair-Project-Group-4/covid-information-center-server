@@ -1,41 +1,29 @@
 const axios = require('axios');
 
-const CovidNews = (req, res, next) =>{
-    axios({
-        method : 'get',
-        url : 'http://newsapi.org/v2/everything?q=covid&from=2021-03-04&to=2021-03-04&sortBy=popularity&apiKey=1a59ee3dcc8843718c9f4b3226d9f95e' 
-    })
+const CovidNews = ()=> {
+    return axios
+    .get('http://newsapi.org/v2/everything?q=covid&from=2021-03-04&to=2021-03-04&sortBy=popularity&apiKey=1a59ee3dcc8843718c9f4b3226d9f95e')
     .then(response =>{
-        console.log(response.data);
+        const covidNews = response.data
+        return covidNews 
     })
     .catch(err =>{
-        console.log(err);
+        return(err);
     })
 }
 
 
-const Country = (req, res, next) =>{
-    axios({
-        method : 'get',
-        url : 'https://corona.lmao.ninja/v2/countries?yesterday=&sort=' 
-    })
+const Country = () =>{
+    return axios
+    .get('https://corona.lmao.ninja/v2/countries?yesterday=&sort=')
     .then(response =>{
-        for(let i = 0; i < response.data.length; i++ ){
-            console.log(response.data[i]);
-            // console.log(response.data[i].country);
-            // console.log(response.data[i].cases);
-            // console.log(response.data[i].todayCases);
-            // console.log(response.data[i].deaths);
-            // console.log(response.data[i].todayDeaths);
-        }
+        const covidNews = response.data
+        return covidNews 
     })
     .catch(err =>{
-        console.log(err);
+        return(err);
     })
 }
-
-
-
 
 module.exports = {
     CovidNews,
