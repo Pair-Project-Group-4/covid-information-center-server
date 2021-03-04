@@ -12,7 +12,8 @@ class Controller {
             if(data && compare){
                 let token = Jwt.token({
                     id : data.id,
-                    email : data.email
+                    email : data.email,
+                    name : data.name
                 })
                 res.status(200).json({token})
             }else {
@@ -26,7 +27,8 @@ class Controller {
     static registerPost(req,res,next){
         let input = {
             email : req.body.email,
-            password : req.body.password
+            password : req.body.password,
+            name : req.body.name
         }
         User.create(input)
         .then((data)=>{
