@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+let Bcrypt = require('../helper/bcryptjs')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -14,11 +15,31 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
-    email: DataTypes.STRING,
-    password: DataTypes.STRING
+    email: {
+      type : DataTypes.STRING,
+      validate: {
+        notEmpty : {
+          msg : "email must not empty"
+        },
+        isEmail : {
+          msg : "format must be @email.com"
+        }
+      }
+    },
+    password: {
+      type : DataTypes.STRING,
+      validate : {
+        notEmpty : {
+          msg : "password must not empty"
+        }
+      }
+    },
   }, {
     sequelize,
     modelName: 'User',
   });
+  User.beforeCreate((instance, options)=>{
+    instance.password = Bcrypt.hash(instance.password)
+  })
   return User;
 };
