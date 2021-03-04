@@ -1,5 +1,6 @@
 const express = require("express");
 const router = require("./routes");
+const error = require("./Middleware/error")
 
 const app = express();
 const PORT = 3000;
