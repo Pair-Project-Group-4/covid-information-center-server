@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Pair-Project-Group-4/covid-information-center-server#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
