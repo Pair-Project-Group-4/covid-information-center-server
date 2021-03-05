@@ -16,7 +16,11 @@ class Controller {
                     email : data.email,
                     name : data.name
                 })
-                res.status(200).json({token})
+                res.status(200).json({
+                    id : data.id,
+                    email : data.email,
+                    token
+                })
             }else {
                 throw('Invalid email or password')
             }
