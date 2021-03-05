@@ -1,7 +1,7 @@
 const {User} = require('../models')
 const Bcrypt = require('../helpers/bcryptjs')
 const Jwt = require('../helpers/JasonWebToken')
-const { Country } = require('../helpers/api')
+const { Country,CovidNews } = require('../helpers/api')
 
 class Controller {
     static loginPost(req,res){
@@ -22,7 +22,7 @@ class Controller {
             }
         })
         .catch((err)=>{
-            res.status(400)
+            res.json(err).status(500)
         })
     }
     static registerPost(req,res){
@@ -37,18 +37,28 @@ class Controller {
             res.status(201).json(data)
         })
         .catch((err)=>{
-            res.send(err)
+            res.json(err).status(500)
         })
     }
-    static test(req,res){
+    static GetDataCovid(req,res){
         Country()
         .then((data)=>{
-            res.send(data)
+            res.json(data).status(200)
         })
         .catch((err)=>{
-            res.send(err)
+            res.json(err).status(500)
         })
     }
+    static GetCovidNews(req,res){
+        CovidNews()
+        .then((data)=>{
+            res.json(data).status(200)
+        })
+        .catch((err)=>{
+            res.json(err).status(500)
+        })
+    }
+
 }
 
 module.exports = Controller
