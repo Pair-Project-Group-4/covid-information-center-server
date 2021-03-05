@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-let Bcrypt = require('../helper/bcryptjs')
+let Bcrypt = require('../helpers/bcryptjs')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
