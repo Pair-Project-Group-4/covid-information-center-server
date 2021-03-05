@@ -1,7 +1,7 @@
 const {User} = require('../models')
 const Bcrypt = require('../helpers/bcryptjs')
 const Jwt = require('../helpers/JasonWebToken')
-const { Country,CovidNews } = require('../helpers/api')
+const { Country,CovidNews,CovidTravel } = require('../helpers/api')
 const {OAuth2Client} = require('google-auth-library');
 
 class Controller {
@@ -60,6 +60,16 @@ class Controller {
         })
     }
 
+    static GetDataTravelCovid(req, res){
+        CovidTravel()
+        .then((data)=>{
+            res.json(data).status(200)
+        })
+        .catch((err)=>{
+            res.json(err).status(500)
+        })
+    }
+
     static loginGoogle(req, res){
 
         // console.log('login');
@@ -74,8 +84,6 @@ class Controller {
             });
 
             const googleUserParams = ticket.getPayload();
-            
-            // console.log(googleUserParams.email ,'=========emial');
             User.findOrCreate({
                 where : {
                     email : googleUserParams.email
