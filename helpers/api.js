@@ -25,7 +25,20 @@ const Country = () =>{
     })
 }
 
+const CovidTravel = () =>{
+    return axios
+    .get('https://www.trackcorona.live/api/travel')
+    .then(response =>{
+        const covidNews = response.data.data
+        return covidNews 
+    })
+    .catch(err =>{
+        return(err);
+    })
+}
+
 module.exports = {
     CovidNews,
-    Country
+    Country,
+    CovidTravel
 }
