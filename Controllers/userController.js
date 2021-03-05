@@ -4,7 +4,7 @@ const Jwt = require('../helpers/JasonWebToken')
 const { Country,CovidNews } = require('../helpers/api')
 
 class Controller {
-    static loginPost(req,res){
+    static loginPost(req,res,next){
         User.findOne({
             where : {email : req.body.email}
         })
@@ -18,14 +18,16 @@ class Controller {
                 })
                 res.status(200).json({token})
             }else {
-                throw {msg : 'invalid email or password'}
+                throw('Invalid email or password')
             }
         })
         .catch((err)=>{
-            res.json(err).status(500)
+            res 
+            next({err})
+            console.log(err);
         })
     }
-    static registerPost(req,res){
+    static registerPost(req,res,next){
         let input = {
             email : req.body.email,
             password : req.body.password,
@@ -37,25 +39,25 @@ class Controller {
             res.status(201).json(data)
         })
         .catch((err)=>{
-            res.json(err).status(500)
+            next(err)
         })
     }
-    static GetDataCovid(req,res){
+    static GetDataCovid(req,res,next){
         Country()
         .then((data)=>{
             res.json(data).status(200)
         })
         .catch((err)=>{
-            res.json(err).status(500)
+            next({err})
         })
-    }
-    static GetCovidNews(req,res){
+    }   
+    static GetCovidNews(req,res,next){
         CovidNews()
         .then((data)=>{
             res.json(data).status(200)
         })
         .catch((err)=>{
-            res.json(err).status(500)
+            next({err})
         })
     }
 

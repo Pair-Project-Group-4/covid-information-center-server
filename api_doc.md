@@ -60,9 +60,40 @@ _Response (201 - Created)_
 ```
 
 _Response (400 - Bad Request)_
+
+if email exist
 ```
 {
-  "message": "Email already taken"
+    "errors": [
+        "Email already exist"
+    ]
+}
+```
+if email field empty
+```
+{
+    "errors": [
+        "email must not empty",
+        "format must be @email.com"
+    ]
+}
+```
+
+if password field empty 
+```
+{
+    "errors": [
+        "password must not empty"
+    ]
+}
+```
+
+if name field empty 
+```
+{
+    "errors": [
+        "name must not be empty"
+    ]
 }
 ```
 
