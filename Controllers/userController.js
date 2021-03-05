@@ -1,8 +1,10 @@
+
 const {User} = require('../models')
 const Bcrypt = require('../helpers/bcryptjs')
 const Jwt = require('../helpers/JasonWebToken')
 const { Country,CovidNews } = require('../helpers/api')
 const {OAuth2Client} = require('google-auth-library');
+
 
 class Controller {
     static loginPost(req,res){
@@ -99,4 +101,4 @@ class Controller {
     }
 }
 
-module.exports = Controller
+module.exports = Controller;
