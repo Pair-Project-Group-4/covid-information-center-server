@@ -2,6 +2,7 @@ const {User} = require('../models')
 const Bcrypt = require('../helpers/bcryptjs')
 const Jwt = require('../helpers/JasonWebToken')
 const { Country,CovidNews } = require('../helpers/api')
+const {OAuth2Client} = require('google-auth-library');
 
 class Controller {
     static loginPost(req,res){
@@ -59,6 +60,43 @@ class Controller {
         })
     }
 
+    static loginGoogle(req, res){
+
+        // console.log('login');
+        console.log(req.body);
+        const client = new OAuth2Client('677709530338-9brnronquupqd6qahtv9tcemian1i7sh.apps.googleusercontent.com');
+        async function verify() {
+
+            // console.log('verify');
+            const ticket = await client.verifyIdToken({
+                idToken: req.body.token,
+                audience: '677709530338-9brnronquupqd6qahtv9tcemian1i7sh.apps.googleusercontent.com'
+            });
+
+            const googleUserParams = ticket.getPayload();
+            
+            // console.log(googleUserParams.email ,'=========emial');
+            User.findOrCreate({
+                where : {
+                    email : googleUserParams.email
+                },
+                defaults : {
+                    name : googleUserParams.name,
+                    password : 'test'
+                }   
+            })
+            .then(data =>{
+                console.log(data, 'ini dataa=============');
+                let token = Jwt.token({
+                    id : data.id,
+                    email : data.email,
+                    name : data.name
+                })
+                res.status(200).json({token})
+            })
+        }
+        verify().catch(console.error);
+    }
 }
 
 module.exports = Controller
